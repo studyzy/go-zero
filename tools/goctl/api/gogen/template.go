@@ -15,6 +15,7 @@ const (
 	logicTemplateFile           = "logic.tpl"
 	clientTemplateFile          = "client.tpl"
 	clientMethodTemplateFile    = "client-method.tpl"
+	interfaceMethodTemplateFile = "interface-method.tpl"
 	mainTemplateFile            = "main.tpl"
 	middlewareImplementCodeFile = "middleware.tpl"
 	routesTemplateFile          = "routes.tpl"
@@ -31,6 +32,7 @@ var templates = map[string]string{
 	logicTemplateFile:           logicTemplate,
 	clientTemplateFile:          clientTemplate,
 	clientMethodTemplateFile:    clientMethodTemplate,
+	interfaceMethodTemplateFile: interfaceMethodTemplate,
 	interfaceTemplateFile:       interfaceTemplate,
 	mainTemplateFile:            mainTemplate,
 	middlewareImplementCodeFile: middlewareImplementCode,

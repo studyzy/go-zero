@@ -14,12 +14,33 @@ import (
 )
 
 type ApiClient struct {
-    Url string
+    url string
     cs httpc.Service
 }
+
+
+func NewApiClient(url string,c *http.Client) *ApiClient{
+	return &ApiClient{
+		url: url,
+		cs:  httpc.NewServiceWithClient("{{.client}}",c),
+	}
+}
+
 // Do calls the url with the given requestBody
 func (cli *ApiClient) Do(ctx context.Context, method, url string, requestBody any) ([]byte, error) {
-	return doRequest(ctx, method, cli.Url+url, requestBody, cli.cs.Do)
+	return doRequest(ctx, method, cli.url+url, requestBody, cli.cs.Do)
+}
+func call[T any](ctx context.Context, c *ApiClient, httpMethod string, url string, req any) (resp T, err error) {
+	result, err := c.Do(ctx, httpMethod, url, req)
+	if err != nil {
+		logx.Error(err)
+		return resp, err
+	}
+	err = json.Unmarshal(result, resp)
+	if err != nil {
+		return resp, fmt.Errorf("json unmarshal failed. error: %v", err)
+	}
+	return resp, nil
 }
 func doRequest(
 	ctx context.Context, method, url string, requestBody any,
