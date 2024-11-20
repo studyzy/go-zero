@@ -1,6 +1,7 @@
 package httpx
 
 import (
+	"bytes"
 	"io"
 	"net/http"
 	"reflect"
@@ -58,7 +59,14 @@ func Parse(r *http.Request, v any) error {
 			return err
 		}
 	}
-
+	// Read the body into a buffer
+	var buf bytes.Buffer
+	_, err := io.Copy(&buf, r.Body)
+	if err != nil {
+		return err
+	}
+	// Restore the original body so it can be read for ParseJsonBody
+	r.Body = io.NopCloser(bytes.NewReader(buf.Bytes()))
 	if err := ParseJsonBody(r, v); err != nil {
 		return err
 	}
@@ -66,6 +74,8 @@ func Parse(r *http.Request, v any) error {
 	if valid, ok := v.(validation.Validator); ok {
 		return valid.Validate()
 	} else if val := validator.Load(); val != nil {
+		// Restore the original body again for Validator
+		r.Body = io.NopCloser(bytes.NewReader(buf.Bytes()))
 		return val.(Validator).Validate(r, v)
 	}
 
