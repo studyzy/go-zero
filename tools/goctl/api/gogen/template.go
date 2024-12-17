@@ -12,10 +12,12 @@ const (
 	contextTemplateFile         = "context.tpl"
 	etcTemplateFile             = "etc.tpl"
 	handlerTemplateFile         = "handler.tpl"
+	handlerTestTemplateFile     = "handler_test.tpl"
 	logicTemplateFile           = "logic.tpl"
 	clientTemplateFile          = "client.tpl"
 	clientMethodTemplateFile    = "client-method.tpl"
 	interfaceMethodTemplateFile = "interface-method.tpl"
+	logicTestTemplateFile       = "logic_test.tpl"
 	mainTemplateFile            = "main.tpl"
 	middlewareImplementCodeFile = "middleware.tpl"
 	routesTemplateFile          = "routes.tpl"
@@ -29,11 +31,13 @@ var templates = map[string]string{
 	contextTemplateFile:         contextTemplate,
 	etcTemplateFile:             etcTemplate,
 	handlerTemplateFile:         handlerTemplate,
+	handlerTestTemplateFile:     handlerTestTemplate,
 	logicTemplateFile:           logicTemplate,
 	clientTemplateFile:          clientTemplate,
 	clientMethodTemplateFile:    clientMethodTemplate,
 	interfaceMethodTemplateFile: interfaceMethodTemplate,
 	interfaceTemplateFile:       interfaceTemplate,
+	logicTestTemplateFile:       logicTestTemplate,
 	mainTemplateFile:            mainTemplate,
 	middlewareImplementCodeFile: middlewareImplementCode,
 	routesTemplateFile:          routesTemplate,

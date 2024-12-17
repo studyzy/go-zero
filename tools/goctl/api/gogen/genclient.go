@@ -60,6 +60,7 @@ func generateClientMethod(gt *template.Template, builder *strings.Builder, g spe
 		"responseType":   responseType,
 		"httpMethod":     mapping[r.Method],
 		"hasRequest":     len(r.RequestTypeName()) > 0,
+		"hasResponse":    len(r.ResponseTypeName()) > 0,
 		"returnString":   returnString,
 		"request":        requestString,
 		"hasDoc":         len(r.JoinedDoc()) > 0,
