@@ -24,7 +24,27 @@ func genClient(dir, rootPkg string, cfg *config.Config, api *spec.ApiSpec) error
 	if err != nil {
 		return err
 	}
-	gt := template.Must(template.New("groupTemplate").Parse(templateText))
+	t := template.New("groupTemplate")
+	// Add all functions from strings package to the template
+	funcMap := template.FuncMap{
+		"Contains":  strings.Contains,
+		"Count":     strings.Count,
+		"HasPrefix": strings.HasPrefix,
+		"HasSuffix": strings.HasSuffix,
+		"Index":     strings.Index,
+		"Join":      strings.Join,
+		"Repeat":    strings.Repeat,
+		"Replace":   strings.Replace,
+		"Split":     strings.Split,
+		"ToLower":   strings.ToLower,
+		"ToUpper":   strings.ToUpper,
+		"Trim":      strings.Trim,
+		"TrimSpace": strings.TrimSpace,
+		// Add other strings functions as needed
+	}
+	t.Funcs(funcMap)
+	gt := template.Must(t.Parse(templateText))
+
 	// generate client method
 	var builder strings.Builder
 	for _, g := range api.Service.Groups {
@@ -52,7 +72,6 @@ func generateClientMethod(gt *template.Template, builder *strings.Builder, g spe
 	if len(r.RequestTypeName()) > 0 {
 		requestString = "req *" + requestGoTypeName(r, typesPacket)
 	}
-
 	data := map[string]any{
 		"client":         strings.Title(client),
 		"function":       strings.Title(strings.TrimSuffix(client, "Client")),
