@@ -38,8 +38,11 @@ var (
 	// VarStringBranch describes the branch.
 	VarStringBranch string
 	// VarStringStyle describes the style of output files.
-	VarStringStyle  string
+	VarStringStyle string
+	// VarBoolWithTest describes whether to generate unit tests.
 	VarBoolWithTest bool
+	// VarBoolWithClient describes whether to generate http-api client.
+	VarBoolWithClient bool
 )
 
 // GoCommand gen go project files from command line
@@ -51,6 +54,7 @@ func GoCommand(_ *cobra.Command, _ []string) error {
 	remote := VarStringRemote
 	branch := VarStringBranch
 	withTest := VarBoolWithTest
+	withClient := VarBoolWithClient
 	if len(remote) > 0 {
 		repo, _ := util.CloneIntoGitHome(remote, branch)
 		if len(repo) > 0 {
@@ -68,11 +72,11 @@ func GoCommand(_ *cobra.Command, _ []string) error {
 		return errors.New("missing -dir")
 	}
 
-	return DoGenProject(apiFile, dir, namingStyle, withTest)
+	return DoGenProject(apiFile, dir, namingStyle, withTest, withClient)
 }
 
 // DoGenProject gen go project files with api file
-func DoGenProject(apiFile, dir, style string, withTest bool) error {
+func DoGenProject(apiFile, dir, style string, withTest, withClient bool) error {
 	api, err := parser.Parse(apiFile)
 	if err != nil {
 		return err
@@ -106,7 +110,10 @@ func DoGenProject(apiFile, dir, style string, withTest bool) error {
 		logx.Must(genHandlersTest(dir, rootPkg, cfg, api))
 		logx.Must(genLogicTest(dir, rootPkg, cfg, api))
 	}
-
+	if withClient {
+		logx.Must(genInterface(dir, rootPkg, cfg, api))
+		logx.Must(genClient(dir, rootPkg, cfg, api))
+	}
 	if err := backupAndSweep(apiFile); err != nil {
 		return err
 	}

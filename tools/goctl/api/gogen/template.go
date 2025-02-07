@@ -15,9 +15,13 @@ const (
 	handlerTestTemplateFile     = "handler_test.tpl"
 	logicTemplateFile           = "logic.tpl"
 	logicTestTemplateFile       = "logic_test.tpl"
+	clientTemplateFile          = "client.tpl"
+	clientMethodTemplateFile    = "client-method.tpl"
+	interfaceMethodTemplateFile = "interface-method.tpl"
 	mainTemplateFile            = "main.tpl"
 	middlewareImplementCodeFile = "middleware.tpl"
 	routesTemplateFile          = "routes.tpl"
+	interfaceTemplateFile       = "interface.tpl"
 	routesAdditionTemplateFile  = "route-addition.tpl"
 	typesTemplateFile           = "types.tpl"
 )
@@ -30,6 +34,10 @@ var templates = map[string]string{
 	handlerTestTemplateFile:     handlerTestTemplate,
 	logicTemplateFile:           logicTemplate,
 	logicTestTemplateFile:       logicTestTemplate,
+	clientTemplateFile:          clientTemplate,
+	clientMethodTemplateFile:    clientMethodTemplate,
+	interfaceMethodTemplateFile: interfaceMethodTemplate,
+	interfaceTemplateFile:       interfaceTemplate,
 	mainTemplateFile:            mainTemplate,
 	middlewareImplementCodeFile: middlewareImplementCode,
 	routesTemplateFile:          routesTemplate,

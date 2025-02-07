@@ -38,7 +38,8 @@
         "remote": "{{.global.remote}}",
         "branch": "{{.global.branch}}",
         "style": "{{.global.style}}",
-        "test": "Generate test files"
+        "test": "Generate test files",
+        "client": "Whether to generate http-api client (default false)"
       },
       "new": {
         "short": "Fast create api service",
