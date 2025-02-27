@@ -9,7 +9,6 @@ import (
 	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
 	"github.com/zeromicro/go-zero/tools/goctl/config"
 	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/tools/goctl/vars"
 )
 
 //go:embed client.tpl
@@ -60,6 +59,7 @@ func generateClientMethod(gt *template.Template, builder *strings.Builder, g spe
 		"responseType":   responseType,
 		"httpMethod":     mapping[r.Method],
 		"hasRequest":     len(r.RequestTypeName()) > 0,
+		"hasResponse":    len(r.ResponseTypeName()) > 0,
 		"returnString":   returnString,
 		"request":        requestString,
 		"hasDoc":         len(r.JoinedDoc()) > 0,
@@ -92,7 +92,7 @@ func genClientFile(builder *strings.Builder, dir, rootPkg string, name string) e
 func genClientImports(parentPkg string) string {
 	var imports []string
 	imports = append(imports, fmt.Sprintf("\"%s\"\n", pathx.JoinPackages(parentPkg, typesDir)))
-	imports = append(imports, fmt.Sprintf("\"%s/core/logx\"", vars.ProjectOpenSourceURL))
+	//imports = append(imports, fmt.Sprintf("\"%s/core/logx\"", vars.ProjectOpenSourceURL))
 	return strings.Join(imports, "\n\t")
 }
 
