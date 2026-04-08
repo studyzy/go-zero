@@ -1,17 +1,18 @@
 package mapping
 
 import (
+	"cmp"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"math"
 	"reflect"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
 
 	"github.com/zeromicro/go-zero/core/lang"
-	"github.com/zeromicro/go-zero/core/stringx"
 )
 
 const (
@@ -91,17 +92,25 @@ func ValidatePtr(v reflect.Value) error {
 	return nil
 }
 
+func convertToString(val any, fullName string) (string, error) {
+	v, ok := val.(string)
+	if !ok {
+		return "", fmt.Errorf("expect string for field %s, but got type %T", fullName, val)
+	}
+
+	return v, nil
+}
+
 func convertTypeFromString(kind reflect.Kind, str string) (any, error) {
 	switch kind {
 	case reflect.Bool:
-		switch strings.ToLower(str) {
-		case "1", "true":
+		if str == "1" || strings.EqualFold(str, "true") {
 			return true, nil
-		case "0", "false":
-			return false, nil
-		default:
-			return false, errTypeMismatch
 		}
+		if str == "0" || strings.EqualFold(str, "false") {
+			return false, nil
+		}
+		return false, errTypeMismatch
 	case reflect.Int:
 		return strconv.ParseInt(str, 10, intSize)
 	case reflect.Int8:
@@ -269,7 +278,7 @@ func parseKeyAndOptions(tagName string, field reflect.StructField) (string, *fie
 	cache, ok := optionsCache[value]
 	cacheLock.RUnlock()
 	if ok {
-		return stringx.TakeOne(cache.key, field.Name), cache.options, cache.err
+		return cmp.Or(cache.key, field.Name), cache.options, cache.err
 	}
 
 	key, options, err := doParseKeyAndOptions(field, value)
@@ -281,7 +290,7 @@ func parseKeyAndOptions(tagName string, field reflect.StructField) (string, *fie
 	}
 	cacheLock.Unlock()
 
-	return stringx.TakeOne(key, field.Name), options, err
+	return cmp.Or(key, field.Name), options, err
 }
 
 // support below notations:
@@ -573,6 +582,10 @@ func toFloat64(v any) (float64, bool) {
 	}
 }
 
+func toReflectValue(tp reflect.Type, v any) reflect.Value {
+	return reflect.ValueOf(v).Convert(Deref(tp))
+}
+
 func usingDifferentKeys(key string, field reflect.StructField) bool {
 	if len(field.Tag) > 0 {
 		if _, ok := field.Tag.Lookup(key); !ok {
@@ -634,11 +647,11 @@ func validateValueInOptions(val any, options []string) error {
 	if len(options) > 0 {
 		switch v := val.(type) {
 		case string:
-			if !stringx.Contains(options, v) {
+			if !slices.Contains(options, v) {
 				return fmt.Errorf(`error: value %q is not defined in options "%v"`, v, options)
 			}
 		default:
-			if !stringx.Contains(options, Repr(v)) {
+			if !slices.Contains(options, Repr(v)) {
 				return fmt.Errorf(`error: value "%v" is not defined in options "%v"`, val, options)
 			}
 		}

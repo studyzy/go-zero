@@ -12,8 +12,10 @@ const (
 	contextTemplateFile         = "context.tpl"
 	etcTemplateFile             = "etc.tpl"
 	handlerTemplateFile         = "handler.tpl"
+	sseHandlerTemplateFile      = "sse_handler.tpl"
 	handlerTestTemplateFile     = "handler_test.tpl"
 	logicTemplateFile           = "logic.tpl"
+	sseLogicTemplateFile        = "sse_logic.tpl"
 	logicTestTemplateFile       = "logic_test.tpl"
 	clientTemplateFile          = "client.tpl"
 	clientMethodTemplateFile    = "client-method.tpl"
@@ -24,6 +26,8 @@ const (
 	interfaceTemplateFile       = "interface.tpl"
 	routesAdditionTemplateFile  = "route-addition.tpl"
 	typesTemplateFile           = "types.tpl"
+	svcTestTemplateFile         = "svc_test.tpl"
+	integrationTestTemplateFile = "integration_test.tpl"
 )
 
 var templates = map[string]string{
@@ -31,8 +35,10 @@ var templates = map[string]string{
 	contextTemplateFile:         contextTemplate,
 	etcTemplateFile:             etcTemplate,
 	handlerTemplateFile:         handlerTemplate,
+	sseHandlerTemplateFile:      sseHandlerTemplate,
 	handlerTestTemplateFile:     handlerTestTemplate,
 	logicTemplateFile:           logicTemplate,
+	sseLogicTemplateFile:        sseLogicTemplate,
 	logicTestTemplateFile:       logicTestTemplate,
 	clientTemplateFile:          clientTemplate,
 	clientMethodTemplateFile:    clientMethodTemplate,
@@ -43,6 +49,8 @@ var templates = map[string]string{
 	routesTemplateFile:          routesTemplate,
 	routesAdditionTemplateFile:  routesAdditionTemplate,
 	typesTemplateFile:           typesTemplate,
+	svcTestTemplateFile:         svcTestTemplate,
+	integrationTestTemplateFile: integrationTestTemplate,
 }
 
 // Category returns the category of the api files.

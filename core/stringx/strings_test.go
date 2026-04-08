@@ -7,6 +7,62 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestContainsString(t *testing.T) {
+	cases := []struct {
+		slice  []string
+		value  string
+		expect bool
+	}{
+		{[]string{"1"}, "1", true},
+		{[]string{"1"}, "2", false},
+		{[]string{"1", "2"}, "1", true},
+		{[]string{"1", "2"}, "3", false},
+		{nil, "3", false},
+		{nil, "", false},
+	}
+
+	for _, each := range cases {
+		t.Run(path.Join(each.slice...), func(t *testing.T) {
+			actual := Contains(each.slice, each.value)
+			assert.Equal(t, each.expect, actual)
+		})
+	}
+}
+
+func TestHasEmpty(t *testing.T) {
+	cases := []struct {
+		args   []string
+		expect bool
+	}{
+		{
+			args:   []string{"a", "b", "c"},
+			expect: false,
+		},
+		{
+			args:   []string{"a", "", "c"},
+			expect: true,
+		},
+		{
+			args:   []string{""},
+			expect: true,
+		},
+		{
+			args:   []string{},
+			expect: false,
+		},
+		{
+			args:   nil,
+			expect: false,
+		},
+	}
+
+	for _, each := range cases {
+		t.Run(path.Join(each.args...), func(t *testing.T) {
+			assert.Equal(t, each.expect, HasEmpty(each.args...))
+		})
+	}
+}
+
 func TestNotEmpty(t *testing.T) {
 	cases := []struct {
 		args   []string
@@ -41,28 +97,6 @@ func TestNotEmpty(t *testing.T) {
 	}
 }
 
-func TestContainsString(t *testing.T) {
-	cases := []struct {
-		slice  []string
-		value  string
-		expect bool
-	}{
-		{[]string{"1"}, "1", true},
-		{[]string{"1"}, "2", false},
-		{[]string{"1", "2"}, "1", true},
-		{[]string{"1", "2"}, "3", false},
-		{nil, "3", false},
-		{nil, "", false},
-	}
-
-	for _, each := range cases {
-		t.Run(path.Join(each.slice...), func(t *testing.T) {
-			actual := Contains(each.slice, each.value)
-			assert.Equal(t, each.expect, actual)
-		})
-	}
-}
-
 func TestFilter(t *testing.T) {
 	cases := []struct {
 		input   string
@@ -90,6 +124,24 @@ func TestFilter(t *testing.T) {
 			assert.Equal(t, each.expect, actual)
 		})
 	}
+}
+
+func BenchmarkFilter(b *testing.B) {
+	b.Run("true", func(b *testing.B) {
+		b.ResetTimer()
+		b.ReportAllocs()
+		for i := 0; i < b.N; i++ {
+			Filter(`ab,cd,ef`, func(r rune) bool { return r == ',' })
+		}
+	})
+
+	b.Run("false", func(b *testing.B) {
+		b.ResetTimer()
+		b.ReportAllocs()
+		for i := 0; i < b.N; i++ {
+			Filter(`ab,cd,ef`, func(r rune) bool { return r == '!' })
+		}
+	})
 }
 
 func TestFirstN(t *testing.T) {

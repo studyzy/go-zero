@@ -43,6 +43,8 @@ var (
 	VarBoolWithTest bool
 	// VarBoolWithClient describes whether to generate http-api client.
 	VarBoolWithClient bool
+	// VarBoolTypeGroup describes whether to group types.
+	VarBoolTypeGroup bool
 )
 
 // GoCommand gen go project files from command line
@@ -77,6 +79,11 @@ func GoCommand(_ *cobra.Command, _ []string) error {
 
 // DoGenProject gen go project files with api file
 func DoGenProject(apiFile, dir, style string, withTest, withClient bool) error {
+	return DoGenProjectWithModule(apiFile, dir, "", style, withTest)
+}
+
+// DoGenProjectWithModule gen go project files with api file using custom module name
+func DoGenProjectWithModule(apiFile, dir, moduleName, style string, withTest bool) error {
 	api, err := parser.Parse(apiFile)
 	if err != nil {
 		return err
@@ -92,23 +99,31 @@ func DoGenProject(apiFile, dir, style string, withTest, withClient bool) error {
 	}
 
 	logx.Must(pathx.MkdirIfNotExist(dir))
-	rootPkg, err := golang.GetParentPackage(dir)
+
+	var rootPkg, projectPkg string
+	if len(moduleName) > 0 {
+		rootPkg, projectPkg, err = golang.GetParentPackageWithModule(dir, moduleName)
+	} else {
+		rootPkg, projectPkg, err = golang.GetParentPackage(dir)
+	}
 	if err != nil {
 		return err
 	}
 
 	logx.Must(genEtc(dir, cfg, api))
-	logx.Must(genConfig(dir, cfg, api))
-	logx.Must(genMain(dir, rootPkg, cfg, api))
-	logx.Must(genServiceContext(dir, rootPkg, cfg, api))
+	logx.Must(genConfig(dir, projectPkg, cfg, api))
+	logx.Must(genMain(dir, rootPkg, projectPkg, cfg, api))
+	logx.Must(genServiceContext(dir, rootPkg, projectPkg, cfg, api))
 	logx.Must(genTypes(dir, cfg, api))
-	logx.Must(genRoutes(dir, rootPkg, cfg, api))
-	logx.Must(genHandlers(dir, rootPkg, cfg, api))
-	logx.Must(genLogic(dir, rootPkg, cfg, api))
+	logx.Must(genRoutes(dir, rootPkg, projectPkg, cfg, api))
+	logx.Must(genHandlers(dir, rootPkg, projectPkg, cfg, api))
+	logx.Must(genLogic(dir, rootPkg, projectPkg, cfg, api))
 	logx.Must(genMiddleware(dir, cfg, api))
 	if withTest {
-		logx.Must(genHandlersTest(dir, rootPkg, cfg, api))
-		logx.Must(genLogicTest(dir, rootPkg, cfg, api))
+		logx.Must(genHandlersTest(dir, rootPkg, projectPkg, cfg, api))
+		logx.Must(genLogicTest(dir, rootPkg, projectPkg, cfg, api))
+		logx.Must(genServiceContextTest(dir, rootPkg, projectPkg, cfg, api))
+		logx.Must(genIntegrationTest(dir, rootPkg, projectPkg, cfg, api))
 	}
 	if withClient {
 		logx.Must(genInterface(dir, rootPkg, cfg, api))
