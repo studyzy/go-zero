@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	apiSpec "github.com/zeromicro/go-zero/tools/goctl/api/spec"
+	apiSpec "github.com/studyzy/go-zero/tools/goctl/api/spec"
 )
 
 func TestIsRequestBodyJson(t *testing.T) {

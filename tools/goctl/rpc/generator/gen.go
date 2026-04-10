@@ -4,10 +4,10 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/util/console"
-	"github.com/zeromicro/go-zero/tools/goctl/util/ctx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
+	"github.com/studyzy/go-zero/tools/goctl/rpc/parser"
+	"github.com/studyzy/go-zero/tools/goctl/util/console"
+	"github.com/studyzy/go-zero/tools/goctl/util/ctx"
+	"github.com/studyzy/go-zero/tools/goctl/util/pathx"
 )
 
 type ZRpcContext struct {

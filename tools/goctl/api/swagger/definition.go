@@ -2,7 +2,7 @@ package swagger
 
 import (
 	"github.com/go-openapi/spec"
-	apiSpec "github.com/zeromicro/go-zero/tools/goctl/api/spec"
+	apiSpec "github.com/studyzy/go-zero/tools/goctl/api/spec"
 )
 
 func definitionsFromTypes(ctx Context, types []apiSpec.Type) spec.Definitions {

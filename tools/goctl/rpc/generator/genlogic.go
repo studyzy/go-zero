@@ -6,13 +6,13 @@ import (
 	"path/filepath"
 	"strings"
 
+	conf "github.com/studyzy/go-zero/tools/goctl/config"
+	"github.com/studyzy/go-zero/tools/goctl/rpc/parser"
+	"github.com/studyzy/go-zero/tools/goctl/util"
+	"github.com/studyzy/go-zero/tools/goctl/util/format"
+	"github.com/studyzy/go-zero/tools/goctl/util/pathx"
+	"github.com/studyzy/go-zero/tools/goctl/util/stringx"
 	"github.com/zeromicro/go-zero/core/collection"
-	conf "github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/stringx"
 )
 
 const logicFunctionTemplate = `{{if .hasComment}}{{.comment}}{{end}}
@@ -171,24 +171,24 @@ func (g *Generator) genLogicFunction(serviceName, goPackage, mainGoPackage, logi
 // logic file. The main pb package is only included when it is actually referenced
 // (i.e. when the request or response type lives in that package, or the RPC streams).
 func addLogicImports(imports *collection.Set[string], pbImportPath, goPackage, mainGoPackage string,
-rpc *parser.RPC, pkgMap map[string]parser.ImportedProto) {
-// Streaming RPCs always reference the main pb package (for the stream type).
-if rpc.StreamsRequest || rpc.StreamsReturns {
-imports.Add(fmt.Sprintf(`"%s"`, pbImportPath))
-return
-}
+	rpc *parser.RPC, pkgMap map[string]parser.ImportedProto) {
+	// Streaming RPCs always reference the main pb package (for the stream type).
+	if rpc.StreamsRequest || rpc.StreamsReturns {
+		imports.Add(fmt.Sprintf(`"%s"`, pbImportPath))
+		return
+	}
 
-reqRef := resolveRPCTypeRef(rpc.RequestType, goPackage, mainGoPackage, pkgMap)
-respRef := resolveRPCTypeRef(rpc.ReturnsType, goPackage, mainGoPackage, pkgMap)
+	reqRef := resolveRPCTypeRef(rpc.RequestType, goPackage, mainGoPackage, pkgMap)
+	respRef := resolveRPCTypeRef(rpc.ReturnsType, goPackage, mainGoPackage, pkgMap)
 
-// Add main pb import if any type ref is from the main package (no extra import path).
-if reqRef.ImportPath == "" || respRef.ImportPath == "" {
-imports.Add(fmt.Sprintf(`"%s"`, pbImportPath))
-}
-if reqRef.ImportPath != "" {
-imports.Add(fmt.Sprintf(`"%s"`, reqRef.ImportPath))
-}
-if respRef.ImportPath != "" {
-imports.Add(fmt.Sprintf(`"%s"`, respRef.ImportPath))
-}
+	// Add main pb import if any type ref is from the main package (no extra import path).
+	if reqRef.ImportPath == "" || respRef.ImportPath == "" {
+		imports.Add(fmt.Sprintf(`"%s"`, pbImportPath))
+	}
+	if reqRef.ImportPath != "" {
+		imports.Add(fmt.Sprintf(`"%s"`, reqRef.ImportPath))
+	}
+	if respRef.ImportPath != "" {
+		imports.Add(fmt.Sprintf(`"%s"`, respRef.ImportPath))
+	}
 }

@@ -139,7 +139,7 @@ AI 助手通过三个工具协同配合:
 
     ```shell
     # Go
-    GOPROXY=https://goproxy.cn/,direct go install github.com/zeromicro/go-zero/tools/goctl@latest
+    GOPROXY=https://goproxy.cn/,direct go install github.com/studyzy/go-zero/tools/goctl@latest
 
     # For Mac
     brew install goctl

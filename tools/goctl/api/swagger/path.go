@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/go-openapi/spec"
-	apiSpec "github.com/zeromicro/go-zero/tools/goctl/api/spec"
-	"github.com/zeromicro/go-zero/tools/goctl/util/stringx"
+	apiSpec "github.com/studyzy/go-zero/tools/goctl/api/spec"
+	"github.com/studyzy/go-zero/tools/goctl/util/stringx"
 )
 
 func spec2Paths(ctx Context, srv apiSpec.Service) *spec.Paths {

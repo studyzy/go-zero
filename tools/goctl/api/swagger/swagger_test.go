@@ -3,8 +3,8 @@ package swagger
 import (
 	"testing"
 
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
 	"github.com/stretchr/testify/assert"
+	"github.com/studyzy/go-zero/tools/goctl/api/spec"
 )
 
 func Test_pathVariable2SwaggerVariable(t *testing.T) {
@@ -66,7 +66,7 @@ func TestArrayDefinitionsBug(t *testing.T) {
 
 	// Verify the array field has correct structure
 	assert.Equal(t, "array", arrayField.Type[0])
-	
+
 	// Check that we have items
 	assert.NotNil(t, arrayField.Items, "Array should have items defined")
 	assert.NotNil(t, arrayField.Items.Schema, "Array items should have schema")
@@ -74,7 +74,7 @@ func TestArrayDefinitionsBug(t *testing.T) {
 	// The FIX: $ref should be inside items, not at schema level
 	hasRef := arrayField.Ref.String() != ""
 	assert.False(t, hasRef, "Schema level should NOT have $ref")
-	
+
 	// The $ref should be in the items
 	hasItemsRef := arrayField.Items.Schema.Ref.String() != ""
 	assert.True(t, hasItemsRef, "Items should have $ref")

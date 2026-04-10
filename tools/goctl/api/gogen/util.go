@@ -7,11 +7,11 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/studyzy/go-zero/tools/goctl/api/spec"
+	"github.com/studyzy/go-zero/tools/goctl/api/util"
+	"github.com/studyzy/go-zero/tools/goctl/pkg/golang"
+	"github.com/studyzy/go-zero/tools/goctl/util/pathx"
 	"github.com/zeromicro/go-zero/core/collection"
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
-	"github.com/zeromicro/go-zero/tools/goctl/api/util"
-	"github.com/zeromicro/go-zero/tools/goctl/pkg/golang"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 type fileGenConfig struct {

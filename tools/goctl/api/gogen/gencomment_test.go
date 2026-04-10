@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/zeromicro/go-zero/tools/goctl/internal/version"
+	"github.com/studyzy/go-zero/tools/goctl/internal/version"
 )
 
 // TestGenerationComments verifies that all generated files have appropriate generation comments

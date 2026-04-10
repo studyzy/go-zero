@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Scenario 08: compare old vs new goctl output — external proto, different Go package
 # Usage: bash compare.sh
-# Requires: go install github.com/zeromicro/go-zero/tools/goctl@latest (auto-installed)
+# Requires: go install github.com/studyzy/go-zero/tools/goctl@latest (auto-installed)
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -27,7 +27,7 @@ verify_build() {
 
 # Install released goctl and build local goctl
 echo ">>> Installing goctl@latest ..."
-go install github.com/zeromicro/go-zero/tools/goctl@latest
+go install github.com/studyzy/go-zero/tools/goctl@latest
 echo ">>> Building local goctl ..."
 go build -o "$NEW_GOCTL" "$GOCTL_ROOT"
 

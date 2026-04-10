@@ -7,11 +7,11 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
-	"github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/internal/version"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
+	"github.com/studyzy/go-zero/tools/goctl/api/spec"
+	"github.com/studyzy/go-zero/tools/goctl/config"
+	"github.com/studyzy/go-zero/tools/goctl/internal/version"
+	"github.com/studyzy/go-zero/tools/goctl/util/format"
+	"github.com/studyzy/go-zero/tools/goctl/util/pathx"
 )
 
 const (

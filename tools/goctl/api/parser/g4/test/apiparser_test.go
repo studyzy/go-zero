@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/tools/goctl/api/parser/g4/ast"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
+	"github.com/studyzy/go-zero/tools/goctl/api/parser/g4/ast"
+	"github.com/studyzy/go-zero/tools/goctl/util/pathx"
 )
 
 var (

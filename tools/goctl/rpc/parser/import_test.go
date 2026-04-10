@@ -69,7 +69,7 @@ func TestParseImportedProtos_Basic(t *testing.T) {
 	assert.Len(t, protos, 1)
 
 	imp := protos[0]
-	assert.Equal(t, "github.com/zeromicro/go-zero/tools/goctl/rpc/parser/base", imp.GoPackage)
+	assert.Equal(t, "github.com/studyzy/go-zero/tools/goctl/rpc/parser/base", imp.GoPackage)
 	assert.Equal(t, "base", imp.PbPackage)
 	assert.True(t, filepath.IsAbs(imp.Src))
 }

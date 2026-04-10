@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/spec"
-	apiSpec "github.com/zeromicro/go-zero/tools/goctl/api/spec"
+	apiSpec "github.com/studyzy/go-zero/tools/goctl/api/spec"
 )
 
 func jsonResponseFromType(ctx Context, atDoc apiSpec.AtDoc, tp apiSpec.Type) *spec.Responses {

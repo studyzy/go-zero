@@ -8,13 +8,13 @@ import (
 	"strings"
 
 	"github.com/emicklei/proto"
+	conf "github.com/studyzy/go-zero/tools/goctl/config"
+	"github.com/studyzy/go-zero/tools/goctl/rpc/parser"
+	"github.com/studyzy/go-zero/tools/goctl/util"
+	"github.com/studyzy/go-zero/tools/goctl/util/format"
+	"github.com/studyzy/go-zero/tools/goctl/util/pathx"
+	"github.com/studyzy/go-zero/tools/goctl/util/stringx"
 	"github.com/zeromicro/go-zero/core/collection"
-	conf "github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/stringx"
 )
 
 const (
@@ -340,14 +340,14 @@ func (g *Generator) getInterfaceFuncs(goPackage, mainGoPackage string, service p
 // buildExtraImportLines converts a set of import paths into quoted import lines
 // for use in the call.tpl {{.extraImports}} placeholder.
 func buildExtraImportLines(extraImports *collection.Set[string]) string {
-if extraImports.Count() == 0 {
-return ""
-}
-keys := extraImports.Keys()
-sort.Strings(keys)
-lines := make([]string, 0, len(keys))
-for _, k := range keys {
-lines = append(lines, fmt.Sprintf(`"%s"`, k))
-}
-return strings.Join(lines, "\n\t")
+	if extraImports.Count() == 0 {
+		return ""
+	}
+	keys := extraImports.Keys()
+	sort.Strings(keys)
+	lines := make([]string, 0, len(keys))
+	for _, k := range keys {
+		lines = append(lines, fmt.Sprintf(`"%s"`, k))
+	}
+	return strings.Join(lines, "\n\t")
 }

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/parser"
+	"github.com/studyzy/go-zero/tools/goctl/rpc/parser"
 )
 
 // rpcTypeRef holds the resolved Go type reference for an RPC request/response type.
