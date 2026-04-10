@@ -71,7 +71,7 @@ service ` + tt.serviceName + `-api {
 			require.NoError(t, err)
 
 			// Call the module-aware service creation function
-			err = gogen.DoGenProjectWithModule(apiFile, serviceDir, tt.moduleName, config.DefaultFormat, false)
+			err = gogen.DoGenProjectWithModule(apiFile, serviceDir, tt.moduleName, config.DefaultFormat, false, false)
 			assert.NoError(t, err)
 
 			// Check go.mod file
@@ -186,7 +186,7 @@ service ` + tt.serviceName + `-api {
 			require.NoError(t, err)
 
 			// Call DoGenProjectWithModule as CreateServiceCommand does
-			err = gogen.DoGenProjectWithModule(apiFile, serviceDir, VarStringModule, VarStringStyle, false)
+			err = gogen.DoGenProjectWithModule(apiFile, serviceDir, VarStringModule, VarStringStyle, false, false)
 
 			if tt.shouldError {
 				assert.Error(t, err)

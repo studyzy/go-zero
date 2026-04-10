@@ -79,11 +79,11 @@ func GoCommand(_ *cobra.Command, _ []string) error {
 
 // DoGenProject gen go project files with api file
 func DoGenProject(apiFile, dir, style string, withTest, withClient bool) error {
-	return DoGenProjectWithModule(apiFile, dir, "", style, withTest)
+	return DoGenProjectWithModule(apiFile, dir, "", style, withTest, withClient)
 }
 
 // DoGenProjectWithModule gen go project files with api file using custom module name
-func DoGenProjectWithModule(apiFile, dir, moduleName, style string, withTest bool) error {
+func DoGenProjectWithModule(apiFile, dir, moduleName, style string, withTest, withClient bool) error {
 	api, err := parser.Parse(apiFile)
 	if err != nil {
 		return err
